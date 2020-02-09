@@ -1,13 +1,14 @@
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Voter implements Comparable<Voter> {
-    private String name;
+    private byte[] name;
     private Date birthDay;
     private int voteCount;
 
     public Voter(String name, Date birthDay) {
-        this.name = name;
+        this.name = name.getBytes();
         this.birthDay = birthDay;
         this.voteCount = 0;
     }
@@ -15,12 +16,12 @@ public class Voter implements Comparable<Voter> {
     @Override
     public boolean equals(Object obj) {
         Voter voter = (Voter) obj;
-        return name.equals(voter.name) && birthDay.equals(voter.birthDay);
+        return Arrays.equals(name, voter.name) && birthDay.equals(voter.birthDay);
     }
 
     @Override
     public int hashCode() {
-        long code = name.hashCode() + birthDay.hashCode();
+        long code = Arrays.hashCode(name) + birthDay.hashCode();
         while (code > Integer.MAX_VALUE) {
             code = code / 10;
         }
@@ -29,11 +30,11 @@ public class Voter implements Comparable<Voter> {
 
     public String toString() {
         SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy.MM.dd");
-        return name + " (" + dayFormat.format(birthDay) + ")";
+        return new String(name) + " (" + dayFormat.format(birthDay) + ")";
     }
 
     public String getName() {
-        return name;
+        return new String(name);
     }
 
     public Date getBirthDay() {
@@ -42,10 +43,10 @@ public class Voter implements Comparable<Voter> {
 
     @Override
     public int compareTo(Voter o) {
-        if (name.compareTo(o.name) == 0) {
+        if (Arrays.compare(name, o.name) == 0) {
             return birthDay.compareTo(o.birthDay);
         }
-        return name.compareTo(o.name);
+        return Arrays.compare(name, o.name);
     }
 
     public void addVote() {

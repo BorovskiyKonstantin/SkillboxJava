@@ -5,15 +5,16 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
 
 public class XMLHandlerOptimized extends DefaultHandler {
-    private String voter;
+    private Voter voter;
     private SimpleDateFormat birthDayFormat = new SimpleDateFormat("yyyy.MM.dd");
-    private HashMap<String, Integer> votersCount;
+    private List<Voter> voters;
 
     public XMLHandlerOptimized() {
-        votersCount = new HashMap<>();
+        voters = new Vector<>();
     }
 
     @Override
@@ -21,10 +22,14 @@ public class XMLHandlerOptimized extends DefaultHandler {
         try {
             if (qName.equals("voter") && voter == null) {
                 Date birthDay = birthDayFormat.parse(attributes.getValue("birthDay"));
-                voter = attributes.getValue("name") + " (" + birthDayFormat.format(birthDay) + ")";
+                voter = new Voter(attributes.getValue("name"), birthDay);
             } else if (qName.equals("visit") && voter != null) {
-                int count = votersCount.getOrDefault(voter, 0);
-                votersCount.put(voter, count + 1);
+                if (voters.contains(voter)) {
+                    voters.get(voters.indexOf(voter)).addVote();
+                } else {
+                    voter.addVote();
+                    voters.add(voter);
+                }
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -39,12 +44,11 @@ public class XMLHandlerOptimized extends DefaultHandler {
     }
 
     public void printDuplicatedVoters() {
-        for (String voter : votersCount.keySet()) {
-            int count = votersCount.get(voter);
+        for (Voter voter : voters) {
+            int count = voter.getVoteCount();
             if (count > 1) {
-                System.out.println(voter + " = " + count);
+                System.out.println(voter.toString() + " = " + count);
             }
         }
     }
 }
-

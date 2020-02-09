@@ -21,14 +21,30 @@ public class Loader {
     public static void main(String[] args) throws Exception {
         long usage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
+        /**Список различных коллекций из 1_000_000 Voters и занимаемая память*/
+//        Voter[] voters = new Voter[1_000_000];    //101 МБ
+//        Vector<Voter> voters = new Vector<>();    //109 МБ
+//        ArrayList<Voter> voters = new ArrayList<>();  //115 МБ
+//        LinkedList<Voter> voters = new LinkedList<>();    //122 МБ
+//        TreeSet<Voter> voters = new TreeSet<>();  //141 МБ
+//        HashSet<Voter> voters = new HashSet<>();  //154 МБ
+//        TreeMap<Voter,Integer> voters = new TreeMap<>();  //158 МБ
+//        HashMap<Voter, Integer> voters = new HashMap<>(); //168 МБ
+
+
+//        for (int i = 0; i < 1_000_000; i++) {
+//            voters.add(new Voter(Integer.toString(i),new Date()));
+//            voters.put(new Voter(Integer.toString(i),new Date()),i);
+//            voters[i] = new Voter(Integer.toString(i),new Date());
+//        }
+
 //        methodDOM();// -Xmx200M
-//        methodSAX();// -Xmx24M
-        methodSAXOptimized();// -Xmx23M немного оптимизирован
-//        methodArrayListSAX();// -Xmx21M требует меньше всего памяти, но работает ОЧЕНЬ долго (больше минуты)
+//        methodSAX();// -Xmx24M до и -Xmx23M после оптимизации Voter
+        methodSAXOptimized();// -Xmx17M (Оптимизированный вариант - 14,7 МБ памяти и 90 секунд выполнения)
 
         usage = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() - usage;
         System.out.println("Результат измерения занимаемой памяти:");
-        System.out.println(usage / 1_000_000);
+        System.out.println(((double) usage / 1_000_000) + " MB");
     }
 
     private static void methodSAX() throws Exception {
@@ -43,14 +59,6 @@ public class Loader {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         XMLHandlerOptimized handler = new XMLHandlerOptimized();
-        parser.parse(new File(fileName), handler);
-        handler.printDuplicatedVoters();
-    }
-
-    private static void methodArrayListSAX() throws Exception {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser parser = factory.newSAXParser();
-        arrayListHandler handler = new arrayListHandler();
         parser.parse(new File(fileName), handler);
         handler.printDuplicatedVoters();
     }
