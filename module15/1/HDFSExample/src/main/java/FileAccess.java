@@ -40,11 +40,11 @@ public class FileAccess {
      * @param path
      */
     public void create(String path) throws Exception {
-        Path file = new Path(rootPath + path);
-        if (hdfs.exists(file)) {
-            hdfs.delete(file, true);
+        Path filePath = new Path(rootPath + path);
+        if (hdfs.exists(filePath)) {
+            hdfs.delete(filePath, true);
         }
-        hdfs.create(file);
+        hdfs.create(filePath);
     }
 
     /**
@@ -56,8 +56,8 @@ public class FileAccess {
     public void append(String path, String content) throws Exception {
         String fileText = read(path);
 
-        Path file = new Path(rootPath + path);
-        OutputStream os = hdfs.create(file);
+        Path filePath = new Path(rootPath + path);
+        OutputStream os = hdfs.create(filePath);
         BufferedWriter br = new BufferedWriter(
                 new OutputStreamWriter(os, "UTF-8")
         );
@@ -73,11 +73,11 @@ public class FileAccess {
      * @param path
      * @return
      */
-    public String read(String path) throws IOException {
-        Path file = new Path(rootPath + path);
+    public String read(String path) throws Exception {
+        Path filePath = new Path(rootPath + path);
 
-        if (hdfs.isFile(file)) {
-            InputStream is = hdfs.open(file);
+        if (hdfs.isFile(filePath)) {
+            InputStream is = hdfs.open(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             StringBuilder builder = new StringBuilder();
 
@@ -89,6 +89,7 @@ public class FileAccess {
             reader.close();
             return builder.toString();
         }
+        System.out.println("Файл не найден: " + path);
         return null;
     }
 
@@ -98,9 +99,15 @@ public class FileAccess {
      * @param path
      */
     public void delete(String path) throws Exception {
-        Path file = new Path(rootPath + path);
-        if (hdfs.exists(file)) {
-            hdfs.delete(file, true);
+        Path filePath = new Path(rootPath + path);
+        boolean isDirectory = hdfs.isDirectory(filePath);
+        if (hdfs.exists(filePath)) {
+            hdfs.delete(filePath, true);
+            if (isDirectory) {
+                System.out.println("Папка удалена " + path);
+            } else {
+                System.out.println("Файл удален " + path);
+            }
         }
     }
 
@@ -111,8 +118,8 @@ public class FileAccess {
      * @return
      */
     public boolean isDirectory(String path) throws Exception {
-        Path file = new Path(rootPath + path);
-        return hdfs.isDirectory(file);
+        Path filePath = new Path(rootPath + path);
+        return hdfs.isDirectory(filePath);
     }
 
     /**

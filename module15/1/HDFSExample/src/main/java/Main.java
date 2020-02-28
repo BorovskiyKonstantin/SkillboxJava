@@ -1,5 +1,5 @@
 public class Main {
-    private static final String ROOT_PATH = "hdfs://86f08168f860:8020";
+    private static final String ROOT_PATH = "hdfs://d3c0e1a0fd34:8020";
     private static String symbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public static void main(String[] args) throws Exception {
@@ -14,7 +14,7 @@ public class Main {
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 10_000_000; i++) {
-            builder.append(getRandomWord());
+            builder.append(getRandomWord() + " ");
         }
         fileAccess.append("/test/file.txt", builder.toString());
 
@@ -23,7 +23,20 @@ public class Main {
         fileAccess.create("/test/file1.txt");
         fileAccess.create("/test/file2.txt");
         fileAccess.create("/test/file3.txt");
-        fileAccess.list("/test/").forEach(System.out::println);
+
+        System.out.println("\n" +
+                "===============\n" +
+                "Содержимое папки \"/test/\":");
+        fileAccess.list("/test/")
+                .forEach(System.out::println);
+
+        System.out.println();
+
+        fileAccess.delete("/test/1/file1.txt");
+        fileAccess.delete("/test/1/");
+        fileAccess.delete("/test/file1.txt");
+        fileAccess.delete("/test/file2.txt");
+        fileAccess.delete("/test/file3.txt");
 
 //        fileAccess.close();
     }
