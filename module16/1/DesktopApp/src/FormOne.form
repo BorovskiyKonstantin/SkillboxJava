@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="FormOne">
+  <grid id="27dc6" binding="rootPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="72b9d" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="d617b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+            <constraints/>
+            <properties>
+              <preferredSize width="450" height="40"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="d1ab5" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <preferredSize width="100" height="30"/>
+                  <text value="Фамилия:"/>
+                </properties>
+              </component>
+              <component id="2ba43" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                <constraints/>
+                <properties>
+                  <background color="-8609633"/>
+                  <preferredSize width="300" height="30"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="5600b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+            <constraints/>
+            <properties>
+              <preferredSize width="450" height="40"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="fe4d8" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <preferredSize width="100" height="30"/>
+                  <text value="Имя:"/>
+                </properties>
+              </component>
+              <component id="97175" class="javax.swing.JTextField" binding="textField2">
+                <constraints/>
+                <properties>
+                  <background color="-8609633"/>
+                  <preferredSize width="300" height="30"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="dc95b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+            <constraints/>
+            <properties>
+              <preferredSize width="450" height="40"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="688f4" class="javax.swing.JLabel">
+                <constraints/>
+                <properties>
+                  <horizontalAlignment value="4"/>
+                  <preferredSize width="100" height="30"/>
+                  <text value="Отчество:"/>
+                </properties>
+              </component>
+              <component id="79c1c" class="javax.swing.JTextField" binding="textField3">
+                <constraints/>
+                <properties>
+                  <background color="-8609633"/>
+                  <preferredSize width="300" height="30"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="245d8" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4cf46" class="javax.swing.JButton" binding="buttonCollapse">
+            <constraints/>
+            <properties>
+              <text value="Collapse"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
